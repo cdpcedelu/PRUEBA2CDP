@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<!--
+  CDP Club de Profesionales - Sitio Web
+  Versión: 1.0
+  Fecha: 2026-03-20 17:35 ARG
+  Opción Visual 2: Minimalista con tarjetas flotantes
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CDP | Club de Profesionales JJ de Urquiza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ============================================
+       VARIABLES - FÁCIL DE EDITAR
+       ============================================ */
+    :root {
+      /* Colores principales */
+      --color-primary: #2855A4;
+      --color-primary-dark: #1d4080;
+      --color-primary-light: #3d6fc4;
+      --color-secondary: #2E8B4A;
+      --color-secondary-light: #4aba6a;
+      --color-accent: #FF6B35;
+      
+      /* Neutros */
+      --color-white: #ffffff;
+      --color-black: #0f172a;
+      --color-gray-50: #f8fafc;
+      --color-gray-100: #f1f5f9;
+      --color-gray-200: #e2e8f0;
+      --color-gray-300: #cbd5e1;
+      --color-gray-400: #94a3b8;
+      --color-gray-500: #64748b;
+      --color-gray-600: #475569;
+      --color-gray-700: #334155;
+      --color-gray-800: #1e293b;
+      
+      /* Tipografía */
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      
+      /* Espaciado y tamaños */
+      --section-padding: 100px 0;
+      --container-max: 1280px;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --border-radius-xl: 32px;
+      
+      /* Sombras */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    /* ============================================
+       RESET
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-gray-700);
+      background: var(--color-gray-50);
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 16px 0;
+      transition: all 0.3s ease;
+    }
+
+    .header.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      padding: 12px 0;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--color-black);
+    }
+
+    .logo-text span {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-gray-500);
+      letter-spacing: 1px;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav-menu a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-gray-600);
+      position: relative;
+      padding: 8px 0;
+      transition: color 0.2s ease;
+    }
+
+    .nav-menu a:hover {
+      color: var(--color-primary);
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width 0.2s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .social-links a {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: var(--color-gray-100);
+      color: var(--color-gray-500);
+      transition: all 0.2s ease;
+    }
+
+    .social-links a:hover {
+      background: var(--color-primary);
+      color: var(--color-white);
+      transform: translateY(-2px);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
+      color: var(--color-white);
+      box-shadow: 0 4px 14px rgba(46, 139, 74, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 139, 74, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--color-white);
+      color: var(--color-gray-700);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--color-gray-600);
+      cursor: pointer;
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60%;
+      height: 100%;
+      /* EDITAR: Reemplazar con imagen real */
+      background: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80') center/cover;
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(40, 85, 164, 0.8) 0%, rgba(46, 139, 74, 0.6) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 550px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--color-white);
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+    }
+
+    .hero-tag i {
+      color: var(--color-accent);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--color-black);
+      margin-bottom: 20px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: var(--color-gray-500);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .hero-stat {
+      text-align: left;
+    }
+
+    .hero-stat-value {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--color-gray-500);
+      margin-top: 4px;
+    }
+
+    /* ============================================
+       SECCIÓN: ACTIVIDADES
+       ============================================ */
+    .section {
+      padding: var(--section-padding);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background: linear-gradient(135deg, rgba(40, 85, 164, 0.1) 0%, rgba(46, 139, 74, 0.1) 100%);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      color: var(--color-black);
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--color-gray-500);
+    }
+
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .activity-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .activity-img {
+      height: 200px;
+      /* EDITAR: Reemplazar con imágenes reales */
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .activity-card:nth-child(1) .activity-img {
+      background-image: url('https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=600&q=80');
+    }
+
+    .activity-card:nth-child(2) .activity-img {
+      background-image: url('https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80');
+    }
+
+    .activity-card:nth-child(3) .activity-img {
+      background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80');
+    }
+
+    .activity-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 6px 12px;
+      background: var(--color-white);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .activity-body {
+      padding: 24px;
+    }
+
+    .activity-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-black);
+      margin-bottom: 10px;
+    }
+
+    .activity-text {
+      font-size: 14px;
+      color: var(--color-gray-500);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .activity-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-primary);
+      transition: gap 0.2s ease;
+    }
+
+    .activity-link:hover {
+      gap: 10px;
+    }
+
+    /* ============================================
+       PRÓXIMA FECHA
+       ============================================ */
+    .fixture-section {
+      background: var(--color-white);
+    }
+
+    .fixture-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .fixture-main h2 {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--color-black);
+      margin-bottom: 8px;
+    }
+
+    .fixture-main p {
+      color: var(--color-gray-500);
+      margin-bottom: 32px;
+    }
+
+    .cancha-block {
+      margin-bottom: 32px;
+    }
+
+    .cancha-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-black);
+      margin-bottom: 16px;
+    }
+
+    .cancha-title span {
+      font-size: 24px;
+    }
+
+    .match-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .match-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: var(--color-gray-50);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .match-row:hover {
+      background: var(--color-gray-100);
+      transform: translateX(4px);
+    }
+
+    .match-time {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--color-primary);
+      min-width: 55px;
+    }
+
+    .match-vs {
+      flex: 1;
+      font-size: 14px;
+      color: var(--color-gray-600);
+    }
+
+    .match-cat {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      background: linear-gradient(135deg, rgba(40, 85, 164, 0.1) 0%, rgba(46, 139, 74, 0.1) 100%);
+      border-radius: 6px;
+      color: var(--color-primary);
+    }
+
+    .fixture-sidebar {
+      position: sticky;
+      top: 120px;
+    }
+
+    .fixture-date-card {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border-radius: var(--border-radius-lg);
+      padding: 32px;
+      color: var(--color-white);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .fixture-date-card i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .fixture-date-card h3 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .fixture-date-card p {
+      opacity: 0.8;
+      font-size: 14px;
+    }
+
+    .fixture-img {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .fixture-img img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    /* ============================================
+       NOSOTROS
+       ============================================ */
+    .about-section {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .about-section::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(46, 139, 74, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .about-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--color-white);
+    }
+
+    .about-section .section-tag {
+      background: rgba(255,255,255,0.15);
+      color: var(--color-white);
+    }
+
+    .about-section .section-title {
+      color: var(--color-white);
+    }
+
+    .about-text {
+      font-size: 18px;
+      line-height: 1.8;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .about-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 50px;
+    }
+
+    .feature-box {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: var(--border-radius);
+      padding: 24px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.15);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .feature-label {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .feature-sub {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       SPONSORS
+       ============================================ */
+    .sponsors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .sponsor-slot {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed var(--color-gray-200);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .sponsor-slot:hover {
+      border-color: var(--color-primary);
+      background: linear-gradient(135deg, rgba(40, 85, 164, 0.02) 0%, rgba(46, 139, 74, 0.02) 100%);
+    }
+
+    .sponsor-slot-inner {
+      text-align: center;
+      color: var(--color-gray-400);
+    }
+
+    .sponsor-slot-inner i {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .sponsor-slot-inner span {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* ============================================
+       CONTACTO
+       ============================================ */
+    .contact-section {
+      background: var(--color-white);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+    }
+
+    .contact-info h2 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-black);
+      margin-bottom: 12px;
+    }
+
+    .contact-info > p {
+      color: var(--color-gray-500);
+      margin-bottom: 32px;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--color-gray-100);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      font-size: 18px;
+    }
+
+    .contact-text strong {
+      display: block;
+      font-size: 14px;
+      color: var(--color-black);
+      margin-bottom: 2px;
+    }
+
+    .contact-text span {
+      font-size: 14px;
+      color: var(--color-gray-500);
+    }
+
+    .contact-form-card {
+      background: var(--color-gray-50);
+      border-radius: var(--border-radius-xl);
+      padding: 40px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-gray-600);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--color-gray-200);
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      background: var(--color-white);
+      transition: all 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(40, 85, 164, 0.1);
+    }
+
+    .form-group textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    /* ============================================
+       MAPA
+       ============================================ */
+    .map-container {
+      height: 400px;
+      border-radius: var(--border-radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      margin-top: 60px;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      background: var(--color-gray-800);
+      color: var(--color-white);
+      padding: 80px 0 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      opacity: 0.7;
+      line-height: 1.7;
+      margin: 16px 0 24px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      width: 42px;
+      height: 42px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      background: var(--color-primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-col h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--color-white);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       WHATSAPP FLOTANTE
+       ============================================ */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 58px;
+      height: 58px;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-size: 26px;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5);
+      z-index: 999;
+      transition: all 0.2s ease;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1) translateY(-2px);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 1024px) {
+      .hero-bg {
+        width: 100%;
+        clip-path: none;
+        opacity: 0.3;
+      }
+
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .hero-btns {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .fixture-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fixture-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .about-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .sponsors-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu,
+      .nav-actions {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .activities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-features {
+        grid-template-columns: 1fr;
+      }
+
+      .sponsors-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fixture-sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-social {
+        justify-content: center;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ============================================
+       HEADER
+       ============================================ -->
+  <header class="header" id="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo">
+          <div class="logo-mark">CDP</div>
+          <div class="logo-text">
+            Club de Profesionales
+            <span>JJ DE URQUIZA</span>
+          </div>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#actividades">Actividades</a></li>
+          <li><a href="#fixture">Fixture</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+          <a href="#contacto" class="btn btn-primary">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+
+        <button class="mobile-menu-btn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i class="fas fa-map-marker-alt"></i>
+          Concepción del Uruguay, Entre Ríos
+        </div>
+
+        <h1 class="hero-title">
+          Viví el deporte en el <span>Club de Profesionales</span>
+        </h1>
+
+        <p class="hero-desc">
+          Un espacio donde podrás disfrutar de fútbol amateur, hockey, 
+          escuelitas para niños, quincho para eventos y mucho más.
+          ¡Sumate a nuestra comunidad!
+        </p>
+
+        <div class="hero-btns">
+          <a href="#contacto" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Contactanos
+          </a>
+          <a href="#actividades" class="btn btn-secondary">
+            <i class="fas fa-play"></i> Ver Actividades
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">50+</div>
+            <div class="hero-stat-label">Años de historia</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">20+</div>
+            <div class="hero-stat-label">Equipos</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">500+</div>
+            <div class="hero-stat-label">Socios</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       ACTIVIDADES
+       ============================================ -->
+  <section class="section" id="actividades">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Actividades</span>
+        <h2 class="section-title">Todo lo que ofrecemos</h2>
+        <p class="section-desc">
+          Descubrí las diferentes actividades que tenemos para vos y tu familia
+        </p>
+      </div>
+
+      <div class="activities-grid">
+        <article class="activity-card">
+          <div class="activity-img">
+            <span class="activity-badge"><i class="fas fa-futbol"></i> Deporte</span>
+          </div>
+          <div class="activity-body">
+            <h3 class="activity-title">Fútbol Amateur</h3>
+            <p class="activity-text">
+              Torneos amateur libre y senior. Escuela de fútbol para niños y jóvenes de 5 a 14 años.
+            </p>
+            <a href="#" class="activity-link">
+              Ver más <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <article class="activity-card">
+          <div class="activity-img">
+            <span class="activity-badge"><i class="fas fa-hockey-puck"></i> Deporte</span>
+          </div>
+          <div class="activity-body">
+            <h3 class="activity-title">Hockey</h3>
+            <p class="activity-text">
+              Equipos masculinos y femeninos. Participá en partidos emocionantes y divertite al máximo.
+            </p>
+            <a href="#" class="activity-link">
+              Ver más <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <article class="activity-card">
+          <div class="activity-img">
+            <span class="activity-badge"><i class="fas fa-fire"></i> Social</span>
+          </div>
+          <div class="activity-body">
+            <h3 class="activity-title">Eventos Sociales</h3>
+            <p class="activity-text">
+              Quincho para asados, reuniones y cumpleaños. Un ambiente acogedor para celebrar.
+            </p>
+            <a href="#" class="activity-link">
+              Ver más <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FIXTURE
+       ============================================ -->
+  <section class="section fixture-section" id="fixture">
+    <div class="container">
+      <div class="fixture-grid">
+        <div class="fixture-main">
+          <span class="section-tag">Calendario</span>
+          <h2>Próxima Fecha</h2>
+          <p>Partidos programados para este fin de semana</p>
+
+          <div class="cancha-block">
+            <h3 class="cancha-title"><span>⚽</span> Cancha 1</h3>
+            <div class="match-list">
+              <div class="match-row">
+                <span class="match-time">11:00</span>
+                <span class="match-vs">Licenciados vs Docentes B</span>
+                <span class="match-cat">Senior</span>
+              </div>
+              <div class="match-row">
+                <span class="match-time">12:30</span>
+                <span class="match-vs">Docentes T vs Contadores A</span>
+                <span class="match-cat">Senior</span>
+              </div>
+              <div class="match-row">
+                <span class="match-time">14:00</span>
+                <span class="match-vs">Abogados A vs Docentes X</span>
+                <span class="match-cat">Senior</span>
+              </div>
+              <div class="match-row">
+                <span class="match-time">15:30</span>
+                <span class="match-vs">Docentes A vs Arquitectos</span>
+                <span class="match-cat">Senior</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cancha-block">
+            <h3 class="cancha-title"><span>⚽</span> Cancha 2</h3>
+            <div class="match-list">
+              <div class="match-row">
+                <span class="match-time">11:00</span>
+                <span class="match-vs">Salud B vs Docentes F</span>
+                <span class="match-cat">Senior</span>
+              </div>
+              <div class="match-row">
+                <span class="match-time">12:30</span>
+                <span class="match-vs">Ingenieros vs Veterinarios</span>
+                <span class="match-cat">Senior</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="btn btn-primary" style="margin-top: 24px;">
+            <i class="fas fa-calendar-alt"></i> Ver Fixture Completo
+          </a>
+        </div>
+
+        <div class="fixture-sidebar">
+          <div class="fixture-date-card">
+            <i class="far fa-calendar-check"></i>
+            <h3>Sábado 22 de Marzo</h3>
+            <p>2026 • Próximo partido</p>
+          </div>
+          <div class="fixture-img">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80" alt="Cancha">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       NOSOTROS
+       ============================================ -->
+  <section class="section about-section" id="nosotros">
+    <div class="container">
+      <div class="about-content">
+        <span class="section-tag">Nosotros</span>
+        <h2 class="section-title">Nuestra Historia</h2>
+        
+        <p class="about-text">
+          Bienvenidos al Club de Profesionales, un lugar único para disfrutar de 
+          actividades deportivas y de ocio en un ambiente cálido y acogedor. 
+          Desde nuestra fundación, nuestro compromiso ha sido ofrecer a nuestros 
+          socios las mejores instalaciones y servicios.
+        </p>
+        
+        <p class="about-text">
+          Nos enorgullece ofrecer una amplia gama de opciones para todas las edades 
+          y gustos. Desde el fútbol y el hockey hasta el quincho para hacer asados, 
+          el club tiene todo lo que necesitas.
+        </p>
+
+        <div class="about-features">
+          <div class="feature-box">
+            <div class="feature-icon">👨‍👩‍👧‍👦</div>
+            <div class="feature-label">Familia</div>
+            <div class="feature-sub">Para todas las edades</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">🏆</div>
+            <div class="feature-label">Tradición</div>
+            <div class="feature-sub">+50 años de historia</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">🤝</div>
+            <div class="feature-label">Comunidad</div>
+            <div class="feature-sub">Unidos por el deporte</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon">⭐</div>
+            <div class="feature-label">Excelencia</div>
+            <div class="feature-sub">Instalaciones de primera</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SPONSORS
+       ============================================ -->
+  <section class="section" id="sponsors">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Apoyo</span>
+        <h2 class="section-title">Nuestros Sponsors</h2>
+        <p class="section-desc">Empresas que confían en nosotros</p>
+      </div>
+
+      <div class="sponsors-grid">
+        <div class="sponsor-slot">
+          <div class="sponsor-slot-inner">
+            <i class="fas fa-bullhorn"></i>
+            <span>Publicidad Disponible</span>
+          </div>
+        </div>
+        <div class="sponsor-slot">
+          <div class="sponsor-slot-inner">
+            <i class="fas fa-bullhorn"></i>
+            <span>Publicidad Disponible</span>
+          </div>
+        </div>
+        <div class="sponsor-slot">
+          <div class="sponsor-slot-inner">
+            <i class="fas fa-bullhorn"></i>
+            <span>Publicidad Disponible</span>
+          </div>
+        </div>
+        <div class="sponsor-slot">
+          <div class="sponsor-slot-inner">
+            <i class="fas fa-bullhorn"></i>
+            <span>Publicidad Disponible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CONTACTO
+       ============================================ -->
+  <section class="section contact-section" id="contacto">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="section-tag">Contacto</span>
+          <h2>Ponete en contacto</h2>
+          <p>Completá el formulario y te responderemos a la brevedad.</p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="contact-text">
+                <strong>Ubicación</strong>
+                <span>Concepción del Uruguay, Entre Ríos</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-phone"></i></div>
+              <div class="contact-text">
+                <strong>Teléfono</strong>
+                <span>+54 3442 XXXXXX</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+              <div class="contact-text">
+                <strong>Email</strong>
+                <span>info@cdpcdu.com.ar</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-clock"></i></div>
+              <div class="contact-text">
+                <strong>Horarios</strong>
+                <span>Lunes a Viernes: 9:00 - 18:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form-card" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono">
+          </div>
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            <i class="fas fa-paper-plane"></i> Enviar Mensaje
+          </button>
+        </form>
+      </div>
+
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26897.45841766927!2d-58.25!3d-32.48!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95afdb!2sConcepci%C3%B3n%20del%20Uruguay%2C%20Entre%20R%C3%ADos!5e0!3m2!1ses!2sar!4v1"
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-mark">CDP</div>
+            <div class="logo-text">
+              Club de Profesionales
+              <span>JJ DE URQUIZA</span>
+            </div>
+          </a>
+          <p>
+            Un espacio para disfrutar de actividades deportivas y sociales 
+            en un ambiente cálido y acogedor en Concepción del Uruguay.
+          </p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Enlaces</h4>
+          <ul class="footer-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#actividades">Actividades</a></li>
+            <li><a href="#fixture">Fixture</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Actividades</h4>
+          <ul class="footer-links">
+            <li><a href="#">Fútbol Amateur</a></li>
+            <li><a href="#">Hockey</a></li>
+            <li><a href="#">Escuelitas</a></li>
+            <li><a href="#">Eventos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Más Info</h4>
+          <ul class="footer-links">
+            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#">Posiciones</a></li>
+            <li><a href="#">Galería</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Club de Profesionales JJ de Urquiza</span>
+        <span>Hecho con ❤️ en Concepción del Uruguay</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       WHATSAPP
+       ============================================ -->
+  <a href="https://wa.me/5434XXXXXXXX?text=Hola!%20Quiero%20más%20información" 
+     class="wa-float" 
+     target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ============================================
+       SCRIPTS
+       ============================================ -->
+  <script>
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('¡Gracias! Nos pondremos en contacto pronto.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
