@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
   CDP Club de Profesionales - Sitio Web
-  Versión: 1.1
-  Fecha: 2026-03-23 14:15 ARG
+  Versión: 1.2
+  Fecha: 2026-03-23 14:25 ARG
   Opción Visual 2: Minimalista con tarjetas flotantes
 -->
 <html lang="es">
@@ -276,24 +276,37 @@
       position: relative;
       padding-top: 80px;
       overflow: hidden;
+      background: var(--color-gray-50);
+    }
+
+    /* Degradado blanco que protege el texto del lado izquierdo */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 65%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-gray-50) 0%, var(--color-gray-50) 60%, transparent 100%);
+      z-index: 1;
     }
 
     .hero-bg {
       position: absolute;
       top: 0;
       right: 0;
-      width: 60%;
+      width: 55%;
       height: 100%;
       /* EDITAR: Reemplazar con imagen real */
       background: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80') center/cover;
-      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
     }
 
     .hero-bg::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(40, 85, 164, 0.85) 0%, rgba(46, 139, 74, 0.7) 100%);
+      background: linear-gradient(135deg, rgba(40, 85, 164, 0.7) 0%, rgba(46, 139, 74, 0.5) 100%);
     }
 
     .hero-content {
@@ -327,7 +340,6 @@
       line-height: 1.1;
       color: var(--color-black);
       margin-bottom: 20px;
-      text-shadow: 0 2px 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.7);
     }
 
     .hero-title span {
@@ -342,7 +354,6 @@
       color: var(--color-gray-600);
       margin-bottom: 32px;
       line-height: 1.7;
-      text-shadow: 0 1px 10px rgba(255,255,255,0.95), 0 0 30px rgba(255,255,255,0.8);
     }
 
     .hero-btns {
@@ -369,14 +380,12 @@
       font-weight: 700;
       color: var(--color-primary);
       line-height: 1;
-      text-shadow: 0 2px 15px rgba(255,255,255,0.9);
     }
 
     .hero-stat-label {
       font-size: 13px;
       color: var(--color-gray-600);
       margin-top: 4px;
-      text-shadow: 0 1px 8px rgba(255,255,255,0.9);
     }
 
     /* ============================================
