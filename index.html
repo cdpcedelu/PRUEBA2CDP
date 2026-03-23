@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <!--
   CDP Club de Profesionales - Sitio Web
-  Versión: 1.2
-  Fecha: 2026-03-23 14:25 ARG
+  Versión: 1.4
+  Fecha: 2026-03-23 14:50 ARG
   Opción Visual 2: Minimalista con tarjetas flotantes
+  - Fixture dinámico desde API
 -->
 <html lang="es">
 <head>
@@ -108,11 +109,10 @@
       z-index: 1000;
       padding: 16px 0;
       transition: all 0.3s ease;
+      background: var(--color-white);
     }
 
     .header.scrolled {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
       box-shadow: var(--shadow-lg);
       padding: 12px 0;
     }
@@ -602,6 +602,24 @@
       background: linear-gradient(135deg, rgba(40, 85, 164, 0.1) 0%, rgba(46, 139, 74, 0.1) 100%);
       border-radius: 6px;
       color: var(--color-primary);
+    }
+
+    .match-result {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--color-secondary);
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .match-row.jugado {
+      opacity: 0.7;
+      background: var(--color-gray-100);
+    }
+
+    .match-row.jugado .match-time {
+      color: var(--color-gray-500);
     }
 
     .fixture-sidebar {
@@ -1276,47 +1294,20 @@
       <div class="fixture-grid">
         <div class="fixture-main">
           <span class="section-tag">Calendario</span>
-          <h2>Próxima Fecha</h2>
-          <p>Partidos programados para este fin de semana</p>
+          <h2 id="fixture-titulo">Próxima Fecha</h2>
+          <p id="fixture-subtitulo">Cargando partidos...</p>
 
-          <div class="cancha-block">
-            <h3 class="cancha-title"><span>⚽</span> Cancha 1</h3>
-            <div class="match-list">
-              <div class="match-row">
-                <span class="match-time">11:00</span>
-                <span class="match-vs">Licenciados vs Docentes B</span>
-                <span class="match-cat">Senior</span>
-              </div>
-              <div class="match-row">
-                <span class="match-time">12:30</span>
-                <span class="match-vs">Docentes T vs Contadores A</span>
-                <span class="match-cat">Senior</span>
-              </div>
-              <div class="match-row">
-                <span class="match-time">14:00</span>
-                <span class="match-vs">Abogados A vs Docentes X</span>
-                <span class="match-cat">Senior</span>
-              </div>
-              <div class="match-row">
-                <span class="match-time">15:30</span>
-                <span class="match-vs">Docentes A vs Arquitectos</span>
-                <span class="match-cat">Senior</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="cancha-block">
-            <h3 class="cancha-title"><span>⚽</span> Cancha 2</h3>
-            <div class="match-list">
-              <div class="match-row">
-                <span class="match-time">11:00</span>
-                <span class="match-vs">Salud B vs Docentes F</span>
-                <span class="match-cat">Senior</span>
-              </div>
-              <div class="match-row">
-                <span class="match-time">12:30</span>
-                <span class="match-vs">Ingenieros vs Veterinarios</span>
-                <span class="match-cat">Senior</span>
+          <!-- Contenedor dinámico para las canchas -->
+          <div id="fixture-canchas">
+            <!-- Loading skeleton -->
+            <div class="cancha-block">
+              <h3 class="cancha-title"><span>⚽</span> Cargando...</h3>
+              <div class="match-list">
+                <div class="match-row" style="opacity: 0.5;">
+                  <span class="match-time">--:--</span>
+                  <span class="match-vs">Cargando partidos...</span>
+                  <span class="match-cat">--</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1329,8 +1320,8 @@
         <div class="fixture-sidebar">
           <div class="fixture-date-card">
             <i class="far fa-calendar-check"></i>
-            <h3>Sábado 22 de Marzo</h3>
-            <p>2026 • Próximo partido</p>
+            <h3 id="fixture-fecha-card">Cargando...</h3>
+            <p id="fixture-estado">Próxima fecha</p>
           </div>
           <div class="fixture-img">
             <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80" alt="Cancha">
@@ -1581,15 +1572,113 @@
   <!-- ============================================
        SCRIPTS
        ============================================ -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
+    // ============================================
+    // CONFIGURACIÓN
+    // ============================================
+    const CDP_API_URL = 'https://script.google.com/macros/s/AKfycbxELCSZ_1um1fExggTpzybMmNQBQWOV3KwOPVjwPcUsIiPl1n8baRSNOwFSIMcdhEAe/exec';
+
+    // ============================================
+    // HEADER SCROLL EFFECT
+    // ============================================
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
+    // ============================================
+    // SMOOTH SCROLL
+    // ============================================
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
         document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
       });
+    });
+
+    // ============================================
+    // FORMULARIO CONTACTO
+    // ============================================
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('¡Gracias! Nos pondremos en contacto pronto.');
+      e.target.reset();
+    });
+
+    // ============================================
+    // CARGAR FIXTURE DINÁMICO
+    // ============================================
+    async function cargarFixture() {
+      try {
+        const response = await fetch(`${CDP_API_URL}?action=getProximaFecha`);
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          renderizarFixture(result.data);
+        } else {
+          console.error('Error cargando fixture:', result.error);
+          mostrarFixtureError();
+        }
+      } catch (error) {
+        console.error('Error de conexión:', error);
+        mostrarFixtureError();
+      }
+    }
+
+    function renderizarFixture(data) {
+      // Actualizar título y fecha
+      document.getElementById('fixture-titulo').textContent = `Fecha ${data.fechaId}`;
+      document.getElementById('fixture-subtitulo').textContent = 
+        data.completa ? 'Fecha completada' : 'Partidos programados';
+      document.getElementById('fixture-fecha-card').textContent = data.fechaLegible;
+      document.getElementById('fixture-estado').textContent = 
+        data.completa ? `${data.partidosJugados}/${data.totalPartidos} jugados` : 'Próxima fecha';
+
+      // Renderizar canchas
+      const canchasContainer = document.getElementById('fixture-canchas');
+      canchasContainer.innerHTML = '';
+
+      const canchasOrdenadas = Object.keys(data.canchas).sort((a, b) => a - b);
+
+      for (const canchaNum of canchasOrdenadas) {
+        const partidos = data.canchas[canchaNum];
+        
+        const canchaBlock = document.createElement('div');
+        canchaBlock.className = 'cancha-block';
+        
+        canchaBlock.innerHTML = `
+          <h3 class="cancha-title"><span>⚽</span> Cancha ${canchaNum}</h3>
+          <div class="match-list">
+            ${partidos.map(p => `
+              <div class="match-row ${p.jugado ? 'jugado' : ''}">
+                <span class="match-time">${p.hora || '--:--'}</span>
+                <span class="match-vs">${p.local} vs ${p.visitante}</span>
+                <span class="match-cat">${p.categoria}</span>
+                ${p.jugado ? `<span class="match-result">${p.resultado}</span>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `;
+        
+        canchasContainer.appendChild(canchaBlock);
+      }
+    }
+
+    function mostrarFixtureError() {
+      document.getElementById('fixture-subtitulo').textContent = 'No se pudo cargar el fixture';
+      document.getElementById('fixture-canchas').innerHTML = `
+        <div class="cancha-block">
+          <p style="color: var(--color-gray-500); text-align: center; padding: 20px;">
+            <i class="fas fa-exclamation-circle"></i> Error al cargar los partidos. 
+            <a href="#" onclick="cargarFixture(); return false;" style="color: var(--color-primary);">Reintentar</a>
+          </p>
+        </div>
+      `;
+    }
+
+    // Cargar fixture al iniciar
+    document.addEventListener('DOMContentLoaded', cargarFixture);
+  </script>
+</body>
+</html>
     
