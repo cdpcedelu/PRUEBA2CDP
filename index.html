@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
   CDP Club de Profesionales - Sitio Web
-  Versión: 1.0
-  Fecha: 2026-03-20 17:35 ARG
+  Versión: 1.1
+  Fecha: 2026-03-23 14:15 ARG
   Opción Visual 2: Minimalista con tarjetas flotantes
 -->
 <html lang="es">
@@ -293,7 +293,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(40, 85, 164, 0.8) 0%, rgba(46, 139, 74, 0.6) 100%);
+      background: linear-gradient(135deg, rgba(40, 85, 164, 0.85) 0%, rgba(46, 139, 74, 0.7) 100%);
     }
 
     .hero-content {
@@ -327,6 +327,7 @@
       line-height: 1.1;
       color: var(--color-black);
       margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.7);
     }
 
     .hero-title span {
@@ -338,9 +339,10 @@
 
     .hero-desc {
       font-size: 18px;
-      color: var(--color-gray-500);
+      color: var(--color-gray-600);
       margin-bottom: 32px;
       line-height: 1.7;
+      text-shadow: 0 1px 10px rgba(255,255,255,0.95), 0 0 30px rgba(255,255,255,0.8);
     }
 
     .hero-btns {
@@ -367,12 +369,14 @@
       font-weight: 700;
       color: var(--color-primary);
       line-height: 1;
+      text-shadow: 0 2px 15px rgba(255,255,255,0.9);
     }
 
     .hero-stat-label {
       font-size: 13px;
-      color: var(--color-gray-500);
+      color: var(--color-gray-600);
       margin-top: 4px;
+      text-shadow: 0 1px 8px rgba(255,255,255,0.9);
     }
 
     /* ============================================
@@ -1445,7 +1449,7 @@
               <div class="contact-icon"><i class="fas fa-envelope"></i></div>
               <div class="contact-text">
                 <strong>Email</strong>
-                <span>info@cdpcdu.com.ar</span>
+                <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="20494e464f604344504344550e434f4d0e4152">[email&#160;protected]</a></span>
               </div>
             </div>
             <div class="contact-item">
@@ -1568,7 +1572,7 @@
   <!-- ============================================
        SCRIPTS
        ============================================ -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 50);
@@ -1579,13 +1583,4 @@
         e.preventDefault();
         document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
       });
-    });
-
-    document.getElementById('contactForm').addEventListener('submit', e => {
-      e.preventDefault();
-      alert('¡Gracias! Nos pondremos en contacto pronto.');
-      e.target.reset();
-    });
-  </script>
-</body>
-</html>
+    
